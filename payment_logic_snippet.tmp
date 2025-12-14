@@ -1,0 +1,14 @@
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const place = urlParams.get('place') || 'Unknown';
+            const hotel = urlParams.get('hotel') || 'Not Selected';
+            const price = urlParams.get('price') || '0';
+
+            // Update Summary
+            document.getElementById('summary-place').textContent = place.charAt(0).toUpperCase() + place.slice(1);
+            document.getElementById('summary-service').textContent = hotel;
+            document.getElementById('summary-price').textContent = new Intl.NumberFormat().format(price);
+        });
+    </script>

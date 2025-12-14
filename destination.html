@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Destination Details</title>
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+    <header class="hero"
+        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/HomeBG.jpg')">
+        <h1><span id="destination-header">Destination</span></h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="hotels.html" id="hotels-link" style="display: none;">Book Hotels</a>
+            <a href="transport.html" id="transport-link" style="display: none;">Plan Transport</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 id="destination-name"></h2>
+
+        <h3>Destination Description</h3>
+        <p id="destination-description"></p>
+
+        <h3>Photo Gallery</h3>
+        <div class="gallery" id="destination-gallery">
+        </div>
+
+        <h3>Plan Your Trip</h3>
+        <p>Ready to go? Select your accommodation and travel method!</p>
+
+        <a href="hotels.html" class="btn" id="hotels-btn">Select Hotels Near <span class="dest-name-span"></span></a>
+        <a href="transport.html" class="btn" id="transport-btn">Plan Bus/Train Journey to <span
+                class="dest-name-span"></span></a>
+    </div>
+
+    <footer>
+        <p style="text-align: center; padding: 10px; font-size: 0.8em; color: #666;">&copy; 2025 Travel BD</p>
+    </footer>
+
+
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="caption"></div>
+    </div>
+
+    <script>
+        // JavaScript to load destination details based on URL parameter
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const place = urlParams.get('place');
+
+            // Define all destination data
+            const destinations = {
+                sundarbans: {
+                    name: "The Sundarbans",
+                    description: "The Sundarbans, meaning 'beautiful forest,' is a dense mangrove forest that spans the delta of the Ganges, Brahmaputra and Meghna rivers. It is famous for being the largest reserve of the Royal Bengal Tiger and provides a unique ecosystem for various wildlife, including crocodiles, deer, and countless bird species. Visitors usually travel by boat for multi-day tours, starting from Mongla or Khulna.",
+                    images: [
+                        "images/DestinationSB.jpg",
+                        "images/DestinationSB2.jpg",
+                        "images/DestinationSB3.jpg"
+                    ]
+                },
+                coxsbazar: {
+                    name: "Cox's Bazar",
+                    description: "Cox's Bazar boasts the world's longest natural sea beach, a sweeping 120 km stretch of sand. The area is a major tourist hub, offering luxury resorts, budget hotels, and local markets. Key attractions include Inani Beach, Himchari, and the nearby St. Martin's Island (seasonal). The beach is ideal for walking, relaxing, and watching the sunset.",
+                    images: [
+                        "images/DestinationCB.jpg",
+                        "images/DestinationCB2.jpg",
+                        "images/DestinationCB3.jpg"
+                    ]
+                },
+                stmartin: {
+                    name: "St. Martin's Island",
+                    description: "St. Martin's Island is a small island in the northeastern part of the Bay of Bengal, about 9 km south of the tip of the Cox's Bazar-Teknaf peninsula. It is the only coral island in Bangladesh. The island is known for its crystal clear blue water, coconut groves, and relaxed atmosphere.",
+                    images: [
+                        "images/DestinationSM.jpg",
+                        "images/DestinationSM2.jpg",
+                        "images/DestinationSM3.jpg"
+                    ]
+                },
+                sylhet: {
+                    name: "Sylhet",
+                    description: "Sylhet is located in the north-east of Bangladesh. It is capable of capturing your heart with its sloping tea gardens, rolling hills, and vast wetlands. The region is famous for the shrine of Hazrat Shah Jalal (R) and the picturesque Jaflong.",
+                    images: [
+                        "images/DestinationTG.jpg",
+                        "images/DestinationTG2.jpg",
+                        "images/DestinationTG3.jpg"
+                    ]
+                },
+                sajek: {
+                    name: "Sajek Valley",
+                    description: "Sajek Valley is an emerging tourist spot in Bangladesh situated among the hills of the Kasalong range of mountains in the Sajek union, Baghaichhari Upazila in Rangamati District. The valley is 1,476 feet above sea level. Sajek valley is known as the Queen of Hills & Roof of Rangamati.",
+                    images: [
+                        "images/DestinationSV.jpg",
+                        "images/DestinationSV2.jpg",
+                        "images/DestinationSV3.jpg"
+                    ]
+                },
+                kuakata: {
+                    name: "Kuakata",
+                    description: "Kuakata is a town known for its panoramic sea beach. It is located in southeastern Bangladesh and is the number two tourist destination in the country. Kuakata offers a full view of the sunrise and sunset from the same white sandy beach in the water of the Bay of Bengal.",
+                    images: [
+                        "images/DestinationKK.jpg",
+                        "images/DestinationKK2.jpg",
+                        "images/DestinationKK3.jpg"
+                    ]
+                }
+            };
+
+
+
+            const destData = destinations[place] || destinations['coxsbazar'];
+            const destName = destData.name;
+
+
+            document.getElementById('page-title').textContent = `${destName} Details`;
+            document.getElementById('destination-header').textContent = destName;
+            document.getElementById('destination-name').textContent = destName;
+            document.getElementById('destination-description').textContent = destData.description;
+            document.querySelectorAll('.dest-name-span').forEach(el => el.textContent = destName);
+
+
+            const galleryDiv = document.getElementById('destination-gallery');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.querySelector('.close');
+
+            destData.images.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `${destName} image`;
+                img.classList.add('gallery-img');
+
+
+                img.addEventListener('click', () => {
+                    lightbox.style.display = 'block';
+                    lightboxImg.src = src;
+                });
+
+                galleryDiv.appendChild(img);
+            });
+
+
+            closeBtn.onclick = function () {
+                lightbox.style.display = "none";
+            }
+
+            window.onclick = function (event) {
+                if (event.target == lightbox) {
+                    lightbox.style.display = "none";
+                }
+            }
+
+
+            document.getElementById('hotels-btn').href = `hotels.html?place=${place}`;
+            document.getElementById('transport-btn').href = `transport.html?place=${place}`;
+        });
+    </script>
+</body>
+
+</html>

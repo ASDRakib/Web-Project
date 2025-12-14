@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Transport</title>
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+    <header class="hero"
+        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/HomeBG.jpg');">
+        <h1>Plan Your Journey</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="destination.html" id="back-to-dest">Back to Details</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Bus & Train Options to <span id="dest-name-transport">Destination</span></h2>
+        <p>Click on an option to select it. All prices are for a one-way trip.</p>
+
+        <div class="option-box" data-name="AC Bus">
+            <img src="images/AcBUs.jpg" alt="AC Bus" class="hotel-img">
+            <div class="option-details">
+                <h3>Luxury AC Bus Service</h3>
+                <p>Type: Bus | Price: BDT 1,800</p>
+                <p>Premium seats, Wi-Fi, and a direct route from Dhaka.</p>
+                <div class="booking-options" onclick="event.stopPropagation()">
+                    <label>
+                        Persons:
+                        <input type="number" class="persons-input" value="1" min="1"
+                            style="width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-box" data-name="Non-AC Bus">
+            <img src="images/NonAcBUS.jpg" alt="Non-AC Bus" class="hotel-img">
+            <div class="option-details">
+                <h3>Standard Non-AC Bus</h3>
+                <p>Type: Bus | Price: BDT 850</p>
+                <p>Economical travel option with frequent stops.</p>
+                <div class="booking-options" onclick="event.stopPropagation()">
+                    <label>
+                        Persons:
+                        <input type="number" class="persons-input" value="1" min="1"
+                            style="width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-box" data-name="Train">
+            <img src="images/Train.jpg" alt="Train" class="hotel-img">
+            <div class="option-details">
+                <h3>Train Service (AC Chair)</h3>
+                <p>Type: Train | Price: BDT 1,400</p>
+                <p>Comfortable rail journey, subject to railway availability.</p>
+                <div class="booking-options" onclick="event.stopPropagation()">
+                    <label>
+                        Persons:
+                        <input type="number" class="persons-input" value="1" min="1"
+                            style="width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <a href="payment.html" class="btn" id="proceed-to-payment">Proceed to Payment</a>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Dynamic link setting for navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const place = urlParams.get('place') || 'destination';
+
+            // Update back button and heading
+            document.getElementById('back-to-dest').href = `destination.html?place=${place}`;
+            document.getElementById('dest-name-transport').textContent = place.replace(/sundarbans/g, 'The Sundarbans').replace(/coxsbazar/g, 'Cox\'s Bazar');
+
+            // Link to payment page (in a real project, this would carry selected transport info)
+            document.getElementById('proceed-to-payment').href = `payment.html?service=transport&place=${place}`;
+        });
+    </script>
+</body>
+
+</html>

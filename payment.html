@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+    <header class="hero"
+        style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/HeroPayment.jpg');">
+        <h1>Booking Summary & Payment</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <div class="container payment-page-container">
+        <h2>Complete Your Booking</h2>
+        <div id="booking-summary" class="booking-summary">
+            <p><strong>Destination:</strong> <span id="summary-place">Loading...</span></p>
+            <p><strong>Service:</strong> <span id="summary-service">Loading...</span></p>
+            <div style="text-align: right; margin-top: 20px;">
+                <span style="font-size: 1.1em; color: #718096;">Total Amount Payable</span>
+                <span class="total-price">BDT <span id="summary-price">0</span></span>
+            </div>
+
+        </div>
+
+        <form id="payment-form">
+            <h3 class="payment-section-title">Select Payment Method</h3>
+
+            <div class="payment-options-container">
+
+                <div class="payment-option-card" onclick="document.getElementById('bank-radio').click()">
+                    <label>
+                        <input type="radio" id="bank-radio" name="payment-method" value="bank">
+                        <span class="payment-label-text">Bank Transfer</span>
+                    </label>
+                    <img src="images/BankLOGO.jpg" alt="Bank Logo" class="payment-logo">
+                </div>
+
+
+                <div class="payment-option-card" onclick="document.getElementById('bkash-radio').click()">
+                    <label>
+                        <input type="radio" id="bkash-radio" name="payment-method" value="bkash">
+                        <span class="payment-label-text">bKash</span>
+                    </label>
+                    <img src="images/BkashLOGO.png" alt="bKash Logo" class="payment-logo">
+                </div>
+
+
+                <div class="payment-option-card" onclick="document.getElementById('rocket-radio').click()">
+                    <label>
+                        <input type="radio" id="rocket-radio" name="payment-method" value="rocket">
+                        <span class="payment-label-text">Rocket</span>
+                    </label>
+                    <img src="images/RocketLOGO.png" alt="Rocket Logo" class="payment-logo">
+                </div>
+
+
+                <div class="payment-option-card" onclick="document.getElementById('nagad-radio').click()">
+                    <label>
+                        <input type="radio" id="nagad-radio" name="payment-method" value="nagad">
+                        <span class="payment-label-text">Nagad</span>
+                    </label>
+                    <img src="images/NagadLOGO.jpg" alt="Nagad Logo" class="payment-logo">
+                </div>
+            </div>
+
+            <p style="margin-top: 30px; text-align: center; color: #e2e8f0;">By clicking "Confirm Payment", you agree to
+                the terms and conditions.</p>
+            <div style="text-align: center;">
+                <button type="submit" class="btn" style="font-size: 1.2rem; padding: 15px 40px;">Confirm
+                    Payment</button>
+            </div>
+        </form>
+
+        <div id="paid-notification" class="paid-notification"
+            style="background: #ffffff; color: #11998e; padding: 20px; border-radius: 10px; text-align: center; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <h3 style="margin: 0; font-size: 1.5em;">✅ Payment Successful!</h3>
+            <p style="font-size: 1.1em; margin-top: 10px; color: #2d3748;">Your booking has been confirmed.</p>
+            <p style="font-size: 0.9em; color: #718096;">A confirmation email has been sent to your inbox.</p>
+            <a href="index.html" class="btn" style="margin-top: 15px; display: inline-block;">Return Home</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const place = urlParams.get('place') || 'Unknown';
+
+
+            const paymentCards = document.querySelectorAll('.payment-option-card');
+            paymentCards.forEach(card => {
+                card.addEventListener('click', function () {
+
+                    paymentCards.forEach(c => c.classList.remove('selected'));
+
+                    this.classList.add('selected');
+
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) radio.checked = true;
+                });
+            });
+
+            const hotelName = urlParams.get('hotelName') || 'None';
+            const hotelPrice = parseInt(urlParams.get('hotelPrice') || '0');
+
+            const transportName = urlParams.get('transportName') || 'None';
+            const transportPrice = parseInt(urlParams.get('transportPrice') || '0');
+
+            const total = hotelPrice + transportPrice;
+
+
+            const formatName = (str) => str.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase());
+
+            document.getElementById('summary-place').textContent = formatName(place);
+
+
+            const nights = urlParams.get('nights') || '1';
+            const bed = urlParams.get('bed') || 'Single';
+            const persons = urlParams.get('persons') || '1';
+
+            const serviceHtml = `
+                <br>🏨 <strong>Hotel:</strong> ${hotelName} 
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;See details: ${nights} Night(s), ${bed} Bed
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;Price: BDT ${new Intl.NumberFormat().format(hotelPrice)}
+                <br>
+                <br>🚌 <strong>Transport:</strong> ${transportName}
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;Travellers: ${persons} Person(s)
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;Price: BDT ${new Intl.NumberFormat().format(transportPrice)}
+            `;
+            document.getElementById('summary-service').innerHTML = serviceHtml;
+
+            document.getElementById('summary-price').textContent = new Intl.NumberFormat().format(total);
+        });
+    </script>
+</body>
+
+</html>

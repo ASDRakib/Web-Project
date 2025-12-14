@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Hotel</title>
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+    <header class="hero"
+        style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/HomeBG.jpg');">
+        <h1>Select Your Hotel</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="destination.html" id="back-to-dest">Back to Details</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Hotels Near <span id="dest-name-hotels">Destination</span></h2>
+        <p>Click on an option to select it. All prices are for a 2-night stay.</p>
+
+        <div class="option-box" data-name="Luxury Resort">
+            <img src="images/HotelLUX.jpg" alt="Luxury Resort" class="hotel-img">
+            <div class="option-details">
+                <h3>Luxury Resort (5-Star)</h3>
+                <p>⭐⭐⭐⭐⭐ | Price: BDT 18,000</p>
+                <p>Includes complimentary breakfast, pool access, and sea-view balcony.</p>
+                <div class="booking-options" onclick="event.stopPropagation()">
+                    <label>
+                        Nights:
+                        <input type="number" class="nights-input" value="1" min="1"
+                            style="width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                    </label>
+                    <label style="margin-left: 10px;">
+                        Bed:
+                        <select class="bed-input" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="Single">Single (1x)</option>
+                            <option value="Double">Double (1.2x)</option>
+                            <option value="King">King (1.5x)</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-box" data-name="Mid-Range Hotel">
+            <img src="images/HotelMID.jpg" alt="Mid-Range Hotel" class="hotel-img">
+            <div class="option-details">
+                <h3>Mid-Range Hotel (3-Star)</h3>
+                <p>⭐⭐⭐ | Price: BDT 8,500</p>
+                <p>Clean rooms, Wi-Fi, and a central location near major attractions.</p>
+                <div class="booking-options" onclick="event.stopPropagation()">
+                    <label>
+                        Nights:
+                        <input type="number" class="nights-input" value="1" min="1"
+                            style="width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                    </label>
+                    <label style="margin-left: 10px;">
+                        Bed:
+                        <select class="bed-input" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="Single">Single (1x)</option>
+                            <option value="Double">Double (1.2x)</option>
+                            <option value="King">King (1.5x)</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-box" data-name="Budget Guesthouse">
+            <img src="images/HotelBUDGET.jpg" alt="Budget Guesthouse" class="hotel-img">
+            <div class="option-details">
+                <h3>Budget Guesthouse</h3>
+                <p>⭐ | Price: BDT 3,200</p>
+                <p>Basic accommodation, suitable for backpackers.</p>
+                <div class="booking-options" onclick="event.stopPropagation()">
+                    <label>
+                        Nights:
+                        <input type="number" class="nights-input" value="1" min="1"
+                            style="width: 50px; padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                    </label>
+                    <label style="margin-left: 10px;">
+                        Bed:
+                        <select class="bed-input" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="Single">Single (1x)</option>
+                            <option value="Double">Double (1.2x)</option>
+                            <option value="King">King (1.5x)</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <a href="transport.html" class="btn" id="proceed-to-payment">Proceed to Transport</a>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Dynamic link setting for navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const place = urlParams.get('place') || 'destination';
+
+            // Update back button and heading
+            document.getElementById('back-to-dest').href = `destination.html?place=${place}`;
+            document.getElementById('dest-name-hotels').textContent = place.replace(/sundarbans/g, 'The Sundarbans').replace(/coxsbazar/g, 'Cox\'s Bazar');
+
+            // Link to transport page
+            document.getElementById('proceed-to-payment').href = `transport.html?place=${place}`;
+        });
+    </script>
+</body>
+
+</html>
